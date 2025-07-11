@@ -1,0 +1,8 @@
+Django==4.2.7
+django-environ==0.11.2
+Pillow==10.0.1  # For image handling
+requests==2.31.0  # For API calls to payment gateways
+python-decouple==3.8  # For environment variables
+django-crispy-forms==2.1  # For better form rendering
+crispy-bootstrap5==2023.10  # Bootstrap 5 templates
+django-allauth==0.58.2  # For authentication (optional)
