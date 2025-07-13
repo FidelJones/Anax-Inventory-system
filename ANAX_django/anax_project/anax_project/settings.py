@@ -38,6 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     # Custom apps
+     'store',  # Ensure your app is included here
+    'crispy_forms',
+    'accounts',
+    'products',
+    'orders',
+    'payments',
+    'notifications',
+    'core',
 ]
 
 MIDDLEWARE = [
