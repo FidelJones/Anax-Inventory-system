@@ -8,36 +8,20 @@ class User(AbstractUser):
         ('admin', 'Admin'),
     )
     user_type = models.CharField(max_length=20, choices=USER_TYPES, default='customer')
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20, blank=True)
     is_verified = models.BooleanField(default=False)
-    
-    # Add these to resolve the conflict
-    groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
-        blank=True,
-        help_text='The groups this user belongs to.',
-        related_name="accounts_user_groups",  # Unique related_name
-        related_query_name="accounts_user",
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name="accounts_user_permissions",  # Unique related_name
-        related_query_name="accounts_user",
-    )
-
-    class Meta:
-        # Add this to ensure no table name collision
-        db_table = 'accounts_user'
-
-
 
 class CustomerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    date_of_birth = models.DateField(null=True, blank=True)
     loyalty_points = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class StaffProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_store_manager = models.BooleanField(default=False)
+    position = models.CharField(max_length=50, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
