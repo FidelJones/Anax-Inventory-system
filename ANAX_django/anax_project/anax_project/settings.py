@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'payments',
     'notifications',
     'core',
-    
+
+    'djoser',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     
 ]
 
@@ -148,6 +150,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 SIMPLE_JWT = {
