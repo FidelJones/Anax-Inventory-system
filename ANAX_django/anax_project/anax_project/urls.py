@@ -23,6 +23,8 @@ urlpatterns = [
     path('anax/products/', include('products.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    path('cart/', include('cart.urls')),
+
 ]
 
 
