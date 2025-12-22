@@ -1,8 +1,10 @@
+// src/pages/Dashboard.jsx
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { ordersAPI } from '../services/api'
 import Loader from '../components/Loader'
 import { FiPackage, FiClock, FiCheckCircle, FiXCircle, FiEye } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
   const { user } = useAuth()
@@ -19,7 +21,7 @@ const Dashboard = () => {
       setLoading(true)
       setError(null)
       const response = await ordersAPI.getOrders()
-      setOrders(response.data.results || response.data)
+      setOrders(response.data.results || response.data || [])
     } catch (err) {
       setError('Failed to fetch orders')
       console.error('Error fetching orders:', err)
@@ -33,7 +35,7 @@ const Dashboard = () => {
       style: 'currency',
       currency: 'UGX',
       minimumFractionDigits: 0,
-    }).format(price)
+    }).format(price || 0)
   }
 
   const formatDate = (dateString) => {
@@ -94,7 +96,7 @@ const Dashboard = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <p className="text-gray-600 mt-2">
-          Welcome back, {user?.username || 'User'}!
+          Welcome back, {user?.username || user?.email || 'User'}!
         </p>
       </div>
 
@@ -152,7 +154,7 @@ const Dashboard = () => {
             <p className="text-red-600 mb-4">{error}</p>
             <button
               onClick={fetchOrders}
-              className="btn-primary"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
             >
               Try Again
             </button>
@@ -162,12 +164,12 @@ const Dashboard = () => {
             <FiPackage className="h-12 w-12 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No orders yet</h3>
             <p className="text-gray-600 mb-4">You haven't placed any orders yet.</p>
-            <a
-              href="/"
-              className="btn-primary"
+            <Link
+              to="/"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors inline-block"
             >
               Start Shopping
-            </a>
+            </Link>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -198,7 +200,7 @@ const Dashboard = () => {
                       #{order.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(order.created_at)}
+                      {formatDate(order.created_at || order.order_date)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
@@ -207,10 +209,10 @@ const Dashboard = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatPrice(order.total_amount)}
+                      {formatPrice(order.total_amount || order.total)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-primary-600 hover:text-primary-900 flex items-center">
+                      <button className="text-blue-600 hover:text-blue-900 flex items-center">
                         <FiEye className="h-4 w-4 mr-1" />
                         View Details
                       </button>
