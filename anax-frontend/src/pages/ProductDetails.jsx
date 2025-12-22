@@ -6,7 +6,6 @@ import { useAuth } from '../contexts/AuthContext'
 import Loader from '../components/Loader'
 import { FiShoppingCart, FiHeart, FiStar, FiArrowLeft } from 'react-icons/fi'
 
-
 const ProductDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
