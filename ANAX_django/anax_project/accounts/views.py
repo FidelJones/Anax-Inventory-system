@@ -20,5 +20,3 @@ class MeView(generics.RetrieveAPIView):
 
 
 
-
-
